@@ -13,8 +13,10 @@ data class Producto(
     val stock: String
 )
 
-class ProductoAdapter(private val lista: MutableList<Producto>) :
-    RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
+class ProductoAdapter(
+    private val lista: MutableList<Producto>,
+    private val onAgregarCarrito: (Producto) -> Unit
+) : RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvInicial: TextView = view.findViewById(R.id.tvInicial)
@@ -37,6 +39,9 @@ class ProductoAdapter(private val lista: MutableList<Producto>) :
         holder.tvDescripcion.text = producto.descripcion
         holder.tvPrecio.text = "Bs. ${producto.precio}"
         holder.tvStock.text = "Stock: ${producto.stock}"
+        holder.itemView.setOnClickListener {
+            onAgregarCarrito(producto)
+        }
     }
 
     override fun getItemCount() = lista.size

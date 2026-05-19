@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/background"
+    android:padding="32dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escaneá para pagar"
+        android:textColor="@color/primary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvTotalQR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total: Bs. 0.00"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"/>
+
+    <ImageView
+        android:id="@+id/ivQR"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@color/white"
+        android:padding="16dp"
+        android:layout_marginBottom="32dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mostrá este QR al vendedor"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnConfirmarPago"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Confirmar pedido"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_button"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+</LinearLayout>
