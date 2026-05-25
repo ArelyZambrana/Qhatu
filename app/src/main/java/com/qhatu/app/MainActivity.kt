@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.btnEmprendedor).setOnClickListener {
-            startActivity(Intent(this, LoginEmprendedorActivity::class.java))
+            startActivity(Intent(this, OpcionEmprendedorActivity::class.java))
         }
 
         findViewById<Button>(R.id.btnCliente).setOnClickListener {

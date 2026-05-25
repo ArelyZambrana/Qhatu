@@ -27,6 +27,7 @@
         <activity android:name=".QRActivity"/>
         <activity android:name=".LoginEmprendedorActivity"/>
         <activity android:name=".BuscarTiendaActivity"/>
+        <activity android:name=".OpcionEmprendedorActivity"/>
     </application>
 
 </manifest>

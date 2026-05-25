@@ -22,34 +22,52 @@ class CatalogoActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvNombreTienda).text = nombre
         findViewById<TextView>(R.id.tvDescripcionTienda).text = descripcion
 
-        adapter = ProductoAdapter(listaProductos) { producto ->
-            CarritoManager.agregar(producto)
-            android.widget.Toast.makeText(this, "${producto.nombre} agregado al carrito", android.widget.Toast.LENGTH_SHORT).show()
-        }
+        adapter = ProductoAdapter(
+            listaProductos,
+            onAgregarCarrito = { producto ->
+                CarritoManager.agregar(producto)
+                android.widget.Toast.makeText(this, "${producto.nombre} agregado al carrito", android.widget.Toast.LENGTH_SHORT).show()
+            },
+            onEditar = { position, producto ->
+                val intent = Intent(this, AgregarProductoActivity::class.java)
+                intent.putExtra("editar", true)
+                intent.putExtra("position", position)
+                intent.putExtra("nombre", producto.nombre)
+                intent.putExtra("precio", producto.precio)
+                intent.putExtra("descripcion", producto.descripcion)
+                intent.putExtra("stock", producto.stock)
+                startActivityForResult(intent, 101)
+            }
+        )
 
         val rv = findViewById<RecyclerView>(R.id.rvProductos)
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
+        findViewById<TextView>(R.id.tvAgregarProducto).setOnClickListener {
+            startActivityForResult(Intent(this, AgregarProductoActivity::class.java), 100)
+        }
+
         findViewById<TextView>(R.id.tvCarrito).setOnClickListener {
             startActivity(Intent(this, CarritoActivity::class.java))
-        }
-        findViewById<TextView>(R.id.tvAgregarProducto).setOnClickListener {
-            val intent = Intent(this, AgregarProductoActivity::class.java)
-            startActivityForResult(intent, 100)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+        if (resultCode == RESULT_OK && data != null) {
             val producto = Producto(
                 nombre = data.getStringExtra("nombre") ?: "",
                 descripcion = data.getStringExtra("descripcion") ?: "",
                 precio = data.getStringExtra("precio") ?: "",
                 stock = data.getStringExtra("stock") ?: ""
             )
-            adapter.agregarProducto(producto)
+            if (requestCode == 100) {
+                adapter.agregarProducto(producto)
+            } else if (requestCode == 101) {
+                val position = data.getIntExtra("position", -1)
+                if (position >= 0) adapter.editarProducto(position, producto)
+            }
         }
     }
 }
