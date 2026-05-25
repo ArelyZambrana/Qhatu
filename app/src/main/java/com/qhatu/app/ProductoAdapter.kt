@@ -10,12 +10,13 @@ data class Producto(
     val nombre: String,
     val descripcion: String,
     val precio: String,
-    val stock: String
+    var stock: String
 )
 
 class ProductoAdapter(
     private val lista: MutableList<Producto>,
-    private val onAgregarCarrito: (Producto) -> Unit
+    private val onAgregarCarrito: (Producto) -> Unit,
+    private val onEditar: (Int, Producto) -> Unit
 ) : RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -24,6 +25,7 @@ class ProductoAdapter(
         val tvDescripcion: TextView = view.findViewById(R.id.tvDescripcionProducto)
         val tvPrecio: TextView = view.findViewById(R.id.tvPrecioProducto)
         val tvStock: TextView = view.findViewById(R.id.tvStock)
+        val tvEditar: TextView = view.findViewById(R.id.tvEditarProducto)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,9 +41,8 @@ class ProductoAdapter(
         holder.tvDescripcion.text = producto.descripcion
         holder.tvPrecio.text = "Bs. ${producto.precio}"
         holder.tvStock.text = "Stock: ${producto.stock}"
-        holder.itemView.setOnClickListener {
-            onAgregarCarrito(producto)
-        }
+        holder.itemView.setOnClickListener { onAgregarCarrito(producto) }
+        holder.tvEditar.setOnClickListener { onEditar(position, producto) }
     }
 
     override fun getItemCount() = lista.size
@@ -49,5 +50,10 @@ class ProductoAdapter(
     fun agregarProducto(producto: Producto) {
         lista.add(producto)
         notifyItemInserted(lista.size - 1)
+    }
+
+    fun editarProducto(position: Int, producto: Producto) {
+        lista[position] = producto
+        notifyItemChanged(position)
     }
 }

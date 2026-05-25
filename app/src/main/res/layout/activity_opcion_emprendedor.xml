@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/primary"
+    android:padding="32dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Qhatu"
+        android:textColor="@color/accent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modo emprendedor"
+        android:textColor="#888888"
+        android:textSize="14sp"
+        android:layout_marginBottom="64dp"/>
+
+    <Button
+        android:id="@+id/btnIniciarSesion"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Iniciar sesión"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_button"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnRegistrarse"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Crear mi tienda gratis"
+        android:textColor="@color/accent"
+        android:background="@android:color/transparent"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="48dp"/>
+
+    <TextView
+        android:id="@+id/tvVolverOpcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="← Volver"
+        android:textColor="#666666"
+        android:textSize="14sp"/>
+
+</LinearLayout>

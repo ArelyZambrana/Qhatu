@@ -67,13 +67,31 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvPrecioProducto"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/accent"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvPrecioProducto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/accent"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvEditarProducto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✏ Editar"
+                    android:textColor="@color/primary_light"
+                    android:textSize="12sp"
+                    android:padding="4dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
