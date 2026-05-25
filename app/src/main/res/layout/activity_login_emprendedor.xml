@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:minHeight="700dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Volver"
+            android:textColor="#B0B0B0"
+            android:textSize="14sp"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="40dp"
+            android:id="@+id/tvVolverLogin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingresá a tu tienda"
+            android:textColor="#B0B0B0"
+            android:textSize="14sp"
+            android:layout_marginBottom="48dp"/>
+
+        <EditText
+            android:id="@+id/etEmailEmprendedor"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Correo electrónico"
+            android:textColorHint="#B0B0B0"
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            android:inputType="textEmailAddress"
+            android:paddingStart="4dp"
+            android:layout_marginBottom="8dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#444444"
+            android:layout_marginBottom="24dp"/>
+
+        <EditText
+            android:id="@+id/etPasswordEmprendedor"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Contraseña"
+            android:textColorHint="#B0B0B0"
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
+            android:paddingStart="4dp"
+            android:layout_marginBottom="8dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#444444"
+            android:layout_marginBottom="40dp"/>
+
+        <Button
+            android:id="@+id/btnIngresarEmprendedor"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Ingresar a mi tienda"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tvCrearCuenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿No tenés tienda? Creá una gratis"
+            android:textColor="@color/accent"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+</ScrollView>
