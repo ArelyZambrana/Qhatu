@@ -28,6 +28,7 @@
         <activity android:name=".LoginEmprendedorActivity"/>
         <activity android:name=".BuscarTiendaActivity"/>
         <activity android:name=".OpcionEmprendedorActivity"/>
+        <activity android:name=".TiendaClienteActivity"/>
     </application>
 
 </manifest>
