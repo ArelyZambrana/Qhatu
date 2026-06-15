@@ -16,11 +16,17 @@ class CatalogoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_catalogo)
 
-        val nombre = intent.getStringExtra("nombre") ?: "Mi Tienda"
-        val descripcion = intent.getStringExtra("descripcion") ?: ""
+        val tvNombre = findViewById<TextView>(R.id.tvNombreTienda)
+        val tvDescripcion = findViewById<TextView>(R.id.tvDescripcionTienda)
 
-        findViewById<TextView>(R.id.tvNombreTienda).text = nombre
-        findViewById<TextView>(R.id.tvDescripcionTienda).text = descripcion
+        val uid = FirebaseHelper.auth.currentUser?.uid
+        if (uid != null) {
+            FirebaseHelper.db.collection("tiendas").document(uid).get()
+                .addOnSuccessListener { doc ->
+                    tvNombre.text = doc.getString("nombre") ?: "Mi Tienda"
+                    tvDescripcion.text = doc.getString("descripcion") ?: ""
+                }
+        }
 
         adapter = ProductoAdapter(
             listaProductos,
@@ -44,6 +50,26 @@ class CatalogoActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
+        cargarProductos()
+
+        findViewById<TextView>(R.id.tvMenu).setOnClickListener {
+            val opciones = arrayOf("Mi perfil", "Historial de ventas", "Cerrar sesión")
+            android.app.AlertDialog.Builder(this)
+                .setTitle("Menú")
+                .setItems(opciones) { _, which ->
+                    when (which) {
+                        0 -> android.widget.Toast.makeText(this, "Próximamente", android.widget.Toast.LENGTH_SHORT).show()
+                        1 -> android.widget.Toast.makeText(this, "Próximamente", android.widget.Toast.LENGTH_SHORT).show()
+                        2 -> {
+                            FirebaseHelper.auth.signOut()
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finishAffinity()
+                        }
+                    }
+                }
+                .show()
+        }
+
         findViewById<TextView>(R.id.tvAgregarProducto).setOnClickListener {
             startActivityForResult(Intent(this, AgregarProductoActivity::class.java), 100)
         }
@@ -51,6 +77,17 @@ class CatalogoActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvCarrito).setOnClickListener {
             startActivity(Intent(this, CarritoActivity::class.java))
         }
+    }
+
+    private fun cargarProductos() {
+        FirebaseHelper.obtenerProductos(
+            onSuccess = { productos ->
+                listaProductos.clear()
+                listaProductos.addAll(productos)
+                adapter.notifyDataSetChanged()
+            },
+            onError = {}
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -63,7 +100,10 @@ class CatalogoActivity : AppCompatActivity() {
                 stock = data.getStringExtra("stock") ?: ""
             )
             if (requestCode == 100) {
-                adapter.agregarProducto(producto)
+                FirebaseHelper.guardarProducto(producto,
+                    onSuccess = { cargarProductos() },
+                    onError = {}
+                )
             } else if (requestCode == 101) {
                 val position = data.getIntExtra("position", -1)
                 if (position >= 0) adapter.editarProducto(position, producto)

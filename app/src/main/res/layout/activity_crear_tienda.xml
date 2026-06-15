@@ -98,6 +98,44 @@
             android:inputType="phone"
             android:padding="12dp"
             android:background="@drawable/bg_input"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correo electrónico"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etEmailRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="tucorreo@gmail.com"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contraseña"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etPasswordRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Mínimo 6 caracteres"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:background="@drawable/bg_input"
             android:layout_marginBottom="40dp"/>
 
         <Button
