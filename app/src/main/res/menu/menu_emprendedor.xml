@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_perfil"
+        android:title="Mi perfil / Mi tienda"/>
+    <item
+        android:id="@+id/nav_historial"
+        android:title="Historial de ventas"/>
+    <item
+        android:id="@+id/nav_dashboard"
+        android:title="Dashboard / Estadísticas"/>
+    <item
+        android:id="@+id/nav_compartir"
+        android:title="Compartir mi tienda"/>
+    <item
+        android:id="@+id/nav_config"
+        android:title="Configuración"/>
+    <item
+        android:id="@+id/nav_cerrar"
+        android:title="Cerrar sesión"/>
+</menu>

@@ -4,27 +4,40 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 
 class CatalogoActivity : AppCompatActivity() {
 
     private lateinit var adapter: ProductoAdapter
     private val listaProductos = mutableListOf<Producto>()
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_catalogo)
 
+        drawerLayout = findViewById(R.id.drawerLayout)
+        val navView = findViewById<NavigationView>(R.id.navView)
         val tvNombre = findViewById<TextView>(R.id.tvNombreTienda)
         val tvDescripcion = findViewById<TextView>(R.id.tvDescripcionTienda)
+
+        val header = navView.getHeaderView(0)
+        val tvDrawerNombre = header.findViewById<TextView>(R.id.tvDrawerNombre)
+        val tvDrawerId = header.findViewById<TextView>(R.id.tvDrawerId)
 
         val uid = FirebaseHelper.auth.currentUser?.uid
         if (uid != null) {
             FirebaseHelper.db.collection("tiendas").document(uid).get()
                 .addOnSuccessListener { doc ->
-                    tvNombre.text = doc.getString("nombre") ?: "Mi Tienda"
+                    val nombre = doc.getString("nombre") ?: "Mi Tienda"
+                    tvNombre.text = nombre
                     tvDescripcion.text = doc.getString("descripcion") ?: ""
+                    tvDrawerNombre.text = nombre
+                    tvDrawerId.text = "#${doc.get("idTienda")}"
                 }
         }
 
@@ -53,21 +66,24 @@ class CatalogoActivity : AppCompatActivity() {
         cargarProductos()
 
         findViewById<TextView>(R.id.tvMenu).setOnClickListener {
-            val opciones = arrayOf("Mi perfil", "Historial de ventas", "Cerrar sesión")
-            android.app.AlertDialog.Builder(this)
-                .setTitle("Menú")
-                .setItems(opciones) { _, which ->
-                    when (which) {
-                        0 -> android.widget.Toast.makeText(this, "Próximamente", android.widget.Toast.LENGTH_SHORT).show()
-                        1 -> android.widget.Toast.makeText(this, "Próximamente", android.widget.Toast.LENGTH_SHORT).show()
-                        2 -> {
-                            FirebaseHelper.auth.signOut()
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finishAffinity()
-                        }
-                    }
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_perfil -> startActivity(Intent(this, MiPerfilActivity::class.java))
+                R.id.nav_historial -> startActivity(Intent(this, HistorialVentasActivity::class.java))
+                R.id.nav_dashboard -> startActivity(Intent(this, DashboardActivity::class.java))
+                R.id.nav_compartir -> compartirTienda()
+                R.id.nav_config -> startActivity(Intent(this, ConfiguracionActivity::class.java))
+                R.id.nav_cerrar -> {
+                    FirebaseHelper.auth.signOut()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finishAffinity()
                 }
-                .show()
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
         }
 
         findViewById<TextView>(R.id.tvAgregarProducto).setOnClickListener {
@@ -77,6 +93,28 @@ class CatalogoActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvCarrito).setOnClickListener {
             startActivity(Intent(this, CarritoActivity::class.java))
         }
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun compartirTienda() {
+        val uid = FirebaseHelper.auth.currentUser?.uid ?: return
+        FirebaseHelper.db.collection("tiendas").document(uid).get()
+            .addOnSuccessListener { doc ->
+                val nombre = doc.getString("nombre") ?: "Mi tienda"
+                val id = doc.get("idTienda")?.toString() ?: ""
+                val mensaje = "¡Visitá mi tienda $nombre en Qhatu! Buscá el código #$id en la app."
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_TEXT, mensaje)
+                startActivity(Intent.createChooser(intent, "Compartir mi tienda"))
+            }
     }
 
     private fun cargarProductos() {

@@ -5,21 +5,49 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 
 class BuscarTiendaActivity : AppCompatActivity() {
 
     private val todasLasTiendas = mutableListOf<String>()
     private val datosTiendas = mutableListOf<Map<String, Any>>()
     private var tiendsFiltradas = mutableListOf<Map<String, Any>>()
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buscar_tienda)
 
+        drawerLayout = findViewById(R.id.drawerLayoutCliente)
+        val navView = findViewById<NavigationView>(R.id.navViewCliente)
         val lv = findViewById<ListView>(R.id.lvTiendas)
         val etBuscar = findViewById<EditText>(R.id.etBuscarTienda)
+
+        findViewById<TextView>(R.id.tvMenuCliente).setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_carrito -> startActivity(Intent(this, CarritoActivity::class.java))
+                R.id.nav_favoritos -> Toast.makeText(this, "Próximamente", Toast.LENGTH_SHORT).show()
+                R.id.nav_config_cliente -> startActivity(Intent(this, ConfiguracionActivity::class.java))
+                R.id.nav_modo_emprendedor -> {
+                    startActivity(Intent(this, OpcionEmprendedorActivity::class.java))
+                }
+                R.id.nav_volver_inicio -> {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finishAffinity()
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
 
         FirebaseHelper.obtenerTiendas(
             onSuccess = { tiendas ->
@@ -75,5 +103,13 @@ class BuscarTiendaActivity : AppCompatActivity() {
                 )
             }
         })
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }

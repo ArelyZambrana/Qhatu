@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_carrito"
+        android:title="Mi carrito"/>
+    <item
+        android:id="@+id/nav_favoritos"
+        android:title="Mis favoritos"/>
+    <item
+        android:id="@+id/nav_config_cliente"
+        android:title="Configuración"/>
+    <item
+        android:id="@+id/nav_modo_emprendedor"
+        android:title="Cambiar a modo emprendedor"/>
+    <item
+        android:id="@+id/nav_volver_inicio"
+        android:title="Volver al inicio"/>
+</menu>

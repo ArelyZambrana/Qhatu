@@ -29,6 +29,10 @@
         <activity android:name=".BuscarTiendaActivity"/>
         <activity android:name=".OpcionEmprendedorActivity"/>
         <activity android:name=".TiendaClienteActivity"/>
+        <activity android:name=".MiPerfilActivity"/>
+        <activity android:name=".HistorialVentasActivity"/>
+        <activity android:name=".DashboardActivity"/>
+        <activity android:name=".ConfiguracionActivity"/>
     </application>
 
 </manifest>

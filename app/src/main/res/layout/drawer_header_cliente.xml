@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:text="Q"
+        android:textColor="@color/primary"
+        android:background="@color/accent"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Qhatu"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modo cliente"
+        android:textColor="@color/accent_light"
+        android:textSize="13sp"
+        android:layout_marginTop="2dp"/>
+
+</LinearLayout>
